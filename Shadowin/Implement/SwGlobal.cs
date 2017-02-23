@@ -7,7 +7,8 @@ namespace Shadowin.Implement
 {
     public class SwGlobal : Global
     {
-        public static string Title = "Shadowin 影窗浏览器";
+        //public static string Title = "Shadowin 影窗浏览器";
+        public static string Title = "";
 
         #region 属性
 

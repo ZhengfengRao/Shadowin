@@ -141,6 +141,7 @@ namespace Shadowin
             if (SwGlobal.RefreshInterval > 0)
             {
                 timer1.Interval = SwGlobal.RefreshInterval;
+                timer1.Interval = 1000;
                 this.RefreshEnabled = true;
             }
             else
@@ -148,6 +149,8 @@ namespace Shadowin
                 this.RefreshEnabled = false;
             }
 
+            this.VScroll = false;
+            this.HScroll = false;
             #endregion
         }
 
@@ -227,7 +230,7 @@ namespace Shadowin
         /// </summary>
         private void OnExitHotKey()
         {
-            if (MessageBox.Show(this, "欢迎捐献支持本项目发展，接受 支付宝 或 PayPal ^_^\n\n您确定要退出吗？", SwGlobal.Title, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            //if (MessageBox.Show(this, "欢迎捐献支持本项目发展，接受 支付宝 或 PayPal ^_^\n\n您确定要退出吗？", SwGlobal.Title, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
             {
                 this.Close();
             }
@@ -266,6 +269,33 @@ namespace Shadowin
             }
         }
 
+        private void DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            if (this.webBrowser1.ReadyState == WebBrowserReadyState.Complete)
+            {
+                HtmlElementCollection bodys = this.webBrowser1.Document.GetElementsByTagName("body");
+                HtmlElement body = null;
+                if (bodys.Count > 0)
+                    body = bodys[0];
+                if (body != null)
+                {
+                    if (body.Style != null)
+                        body.Style += " overflow: hidden; ";
+                    else
+                        body.Style = " overflow: hidden; ";
+
+                    HtmlElement logo = this.webBrowser1.Document.GetElementById("logo");
+                    if(logo != null)
+                    {
+                        if (logo.Style != null)
+                            logo.Style += "display:none";
+                        else
+                            logo.Style = "display:none";
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// 重新定位
         /// </summary>
@@ -288,7 +318,7 @@ namespace Shadowin
                                 MessageBoxIcon.Information
                ) == DialogResult.OK)
             {
-                Process.Start("iexplore.exe", "https://github.com/heddaz/shadowin");
+                Process.Start("chrome.exe", "https://github.com/heddaz/shadowin");
             }
         }
     }

@@ -45,6 +45,10 @@
             this.webBrowser1.Size = new System.Drawing.Size(960, 240);
             this.webBrowser1.TabIndex = 0;
             this.webBrowser1.TabStop = false;
+            this.webBrowser1.ScrollBarsEnabled = false;
+            this.webBrowser1.ScriptErrorsSuppressed = true;
+            this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.DocumentCompleted);
+
             // 
             // pictureBox1
             // 
